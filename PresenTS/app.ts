@@ -70,18 +70,18 @@ class Slide {
             this.DisplayElement.innerHTML = res;
         });
         this.Position();
-        this.FadeOut();
+        this.Hide();
     }
     public CurrentState: ITransform = {
         Translate: { X: 0, Y: 0, Z: 0 },
         Rotate: { X: 0, Y: 0, Z: 0 },
         Scale: 1
     };
-    FadeIn() {
+    Show() {
         this.DisplayElement.style.opacity = "1";
     }
-    FadeOut() {
-        this.DisplayElement.style.opacity = ".3";
+    Hide() {
+        this.DisplayElement.style.opacity = ".2";
     }
     Position() {
         var state = this.CurrentState;
@@ -90,7 +90,7 @@ class Slide {
             + Transform.rotateX(state.Rotate.X)
             + Transform.rotateY(state.Rotate.Y)
             + Transform.rotateZ(state.Rotate.Z)
-        + Transform.scale(state.Scale)
+            + Transform.scale(state.Scale)
         ;
 
         this.DisplayElement.style.transform = val;
@@ -140,11 +140,15 @@ class PresenTS {
         var slideScale = displaySlide.CurrentState.Scale;
 
         var slide = el.children[0];
+
+        if (!slide) {
+            return 1;
+        }
         var hScale = window.innerHeight / slide.clientHeight,
             wScale = window.innerWidth / slide.clientWidth,
             scale = hScale > wScale ? wScale : hScale;
 
-        return (scale - scale * this.zoomBleed)/slideScale;
+        return (scale - scale * this.zoomBleed) / slideScale;
     }
 
 
@@ -168,15 +172,17 @@ class PresenTS {
         this.LookatSlide(this.slideIdx - 1);
     }
     LookatAll() {
+        location.hash = "";
         if (this.slideIdx >= 0)
-            this._slides[this.slideIdx].FadeOut();
+            this._slides[this.slideIdx].Hide();
         this.resetView();
     }
     LookatSlide(idx: number) {
         if (this.slideIdx >= 0)
-            this._slides[this.slideIdx].FadeOut();
+            this._slides[this.slideIdx].Hide();
 
         this.slideIdx = idx;
+
         var currentSlide = this._slides[this.slideIdx];
         var st = currentSlide.CurrentState;
         var scale = this.computeWindowScale(currentSlide);
@@ -187,7 +193,8 @@ class PresenTS {
         };
         this.SetView(scale);
         this.SetCamera(newState);
-        this._slides[this.slideIdx].FadeIn();
+        this._slides[this.slideIdx].Show();
+        location.hash = idx.toString();
     }
 
     LookatFirstSlide() {
@@ -220,9 +227,21 @@ window.onload = () => {
 
     var el = document.getElementById('content');
     var presentation = new PresenTS(el, .7);
-    slides.forEach(s => { presentation.AddSlide(s); });
 
 
+    window.onhashchange = (ev: Event) => {
+        var num = window.location.hash.substr(1);
+        try {
+            var idx = parseInt(num);
+            if (!isNaN(idx) && idx !== presentation.slideIdx) {
+                console.log("switing to slide " + idx);
+                presentation.LookatSlide(idx);
+            }
+        } catch (e) {
+            console.error(e);
+
+        }
+    };
 
     window.onkeydown = (ev: KeyboardEvent) => {
         if (ev.keyCode == 27) {//esc = 27
@@ -246,4 +265,9 @@ window.onload = () => {
             ev.preventDefault();
         }
     };
+
+
+    slides.forEach(s => { presentation.AddSlide(s); });
+    window.onhashchange(null);
+
 };
