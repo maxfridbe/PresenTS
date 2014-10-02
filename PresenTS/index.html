@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+    <script src="app.js"></script>
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+         .presents-slide {
+             position: absolute;
+             top: 0;
+             left: 0;
+             -webkit-transition: all 1s, ease-in-out 0ms;
+             -moz-transition: all 1s, ease-in-out 0ms;
+             -ms-transition: all 1s, ease-in-out 0ms;
+             -o-transition: all 1s, ease-in-out 0ms;
+             transition: all 1s, ease-in-out 0ms;
+             -webkit-transform-style: preserve-3d;
+             -moz-transform-style: preserve-3d;
+             -ms-transform-style: preserve-3d;
+             -o-transform-style: preserve-3d;
+             transform-style: preserve-3d;
+         }
+
+        #content {
+            position: absolute;
+            -webkit-transition: all 1000ms, ease-in-out 1000ms;
+            -moz-transition: all 1000ms, ease-in-out 1000ms;
+            -ms-transition: all 1000ms, ease-in-out 1000ms;
+            -o-transition: all 1000ms, ease-in-out 1000ms;
+            transition: all 1000ms, ease-in-out 1000ms;
+            top: 50%;
+            left: 50%;
+            -webkit-transform-style: preserve-3d;
+            -moz-transform-style: preserve-3d;
+            -ms-transform-style: preserve-3d;
+            -o-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            -webkit-transform-origin: left top 0px;
+            -moz-transform-origin: left top 0px;
+            -ms-transform-origin: left top 0px;
+            -o-transform-origin: left top 0px;
+            transform-origin: left top 0px;
+        }
+
+        #content>.camera {
+            position: absolute;
+            -webkit-transform-origin: left top 0px;
+            -moz-transform-origin: left top 0px;
+            -ms-transform-origin: left top 0px;
+            -o-transform-origin: left top 0px;
+            transform-origin: left top 0px;
+            -webkit-transition: all 1000ms, ease-in-out 500ms;
+            -moz-transition: all 1000ms, ease-in-out 500ms;
+            -ms-transition: all 1000ms, ease-in-out 500ms;
+            -o-transition: all 1000ms, ease-in-out 500ms;
+            transition: all 1000ms, ease-in-out 500ms;
+            -webkit-transform-style: preserve-3d;
+            -moz-transform-style: preserve-3d;
+            -ms-transform-style: preserve-3d;
+            -o-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+   <div id="content"></div>
+</body>
+</html>
